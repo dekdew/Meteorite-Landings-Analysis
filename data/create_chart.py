@@ -12,12 +12,10 @@ def call_data():
 def clean_data():
     """clean data and return somethings to create chart"""
     data = call_data() # call data
-    print(data[0]['year'][:4])
 
     found, fail = 0, 0 # count meteorite fall
     years = {0:0} # count meteorite in each years 0 is unknown
-    mass = {'0':0 , '1':0 , '2':0 , '3':0 , '4':0 , '5':0 , '6':0 , '7':0} # count meteorite in each mass (g)
-    # '0' is 0-10, '1' is 10-100, '2' is 100-1000, '3' is 1000-10K, '4' is 10K-100K, '5' is 100K-1M, '6' is 1M-10M, '7' is 10M-100M
+    mass = {'0-10':0 , '10-100':0 , '100-1000':0 , '1000-10k':0 , '10K-100K':0 , '100K-1M':0 , '1M-10M':0 , '10M-100M':0} # count meteorite in each mass (g)
 
     for i in data:
         # count meteorite fall
@@ -26,17 +24,44 @@ def clean_data():
         else:
             fail += 1
 
-        # count meteorite in each years
+        # count meteorite in each years and mass
         try:
             year = int(i[u'year'][:4].strip('-'))
             if year in years: # check if year is already in dict years
                 years[year] += 1 # value of this year + 1
             else: # check if year is not in dict years then create key year
                 years[year] = 1 # value of this year = 1
+
+            m_mass = float(i['mass'])
+            if 0 <= m_mass < 10:
+                mass['0-10'] += 1
+            elif 10 <= m_mass < 100:
+                mass['10-100'] += 1
+            elif 100 <= m_mass < 1000:
+                mass['100-1000'] += 1
+            elif 1000 <= m_mass < 10000:
+                mass['1000-10k'] += 1
+            elif 10000 <= m_mass < 100000:
+                mass['10K-100K'] += 1
+            elif 100000 <= m_mass < 1000000:
+                mass['100K-1M'] += 1
+            elif 1000000 <= m_mass < 10000000:
+                mass['1M-10M'] += 1
+            else:
+                mass['10M-100M'] += 1
         except KeyError: # check if year is no data
             years[0] += 1 # value of unknown + 1
 
-    print(found, fail, found+fail)
-    print(sorted(years), sum(years.values()))
+    #print(found, fail, found+fail)
+    #print(sorted(years), sum(years.values()))
+    #print(mass)
+    return found, fail, sorted(years), mass
 
-clean_data()
+def create_chart():
+    found, fail, years, mass = clean_data()
+
+    mass_chart = pygal.HorizontalBar(fill=True, interpolate='cubic', style=NeonStyle)
+    for i in mass.keys():
+        mass_chart.add(i, mass[i])
+    mass_chart.render_to_file('../static/img/mass.svg')
+create_chart()
