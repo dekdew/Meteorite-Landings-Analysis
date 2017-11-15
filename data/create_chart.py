@@ -14,7 +14,7 @@ def clean_data():
     data = call_data() # call data
 
     found, fail = 0, 0 # count meteorite fall
-    years = {0:0} # count meteorite in each years 0 is unknown
+    years = {} # count meteorite in each years 0 is unknown
     mass = {'0-10':0 , '10-100':0 , '100-1000':0 , '1000-10k':0 , '10K-100K':0 , '100K-1M':0 , '1M-10M':0 , '10M-100M':0} # count meteorite in each mass (g)
 
     for i in data:
@@ -50,12 +50,12 @@ def clean_data():
             else:
                 mass['10M-100M'] += 1
         except KeyError: # check if year is no data
-            years[0] += 1 # value of unknown + 1
+            continue
 
     #print(found, fail, found+fail)
     #print(sorted(years), sum(years.values()))
     #print(mass)
-    return found, fail, sorted(years), mass
+    return found, fail, years, mass
 
 def create_chart():
     found, fail, years, mass = clean_data()
@@ -65,6 +65,10 @@ def create_chart():
     fall_chart.add('Fail', fail)
     fall_chart.render_to_file('../static/img/fall.svg')
 
+    years_chart = pygal.HorizontalBar(style=NeonStyle)
+    for i in sorted(years):
+        years_chart.add(str(i), years[i])
+    years_chart.render_to_file('../static/img/years.svg')
 
     mass_chart = pygal.HorizontalBar(style=NeonStyle)
     for i in mass.keys():
