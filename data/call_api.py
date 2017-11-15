@@ -1,11 +1,19 @@
-import requests
 import json
+from sodapy import Socrata
 
-r = requests.get(url='https://data.nasa.gov/resource/y77d-th95.json').json()
+# Unauthenticated client only works with public data sets. Note 'None'
+# in place of application token, and no username or password:
+client = Socrata("data.nasa.gov", None)
 
-data = json.dumps(r)
-print(data)
+# Example authenticated client (needed for non-public datasets):
+# client = Socrata(data.nasa.gov,
+#                  MyAppToken,
+#                  userame="user@example.com",
+#                  password="AFakePassword")
 
+# First 2000 results, returned as JSON from API / converted to Python list of
+# dictionaries by sodapy.
+results = client.get("y77d-th95", limit=45716)
 
 with open('data.json', 'w') as f:
-     json.dump(data, f)
+     json.dump(results, f)
