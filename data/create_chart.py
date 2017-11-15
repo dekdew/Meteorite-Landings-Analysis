@@ -60,7 +60,13 @@ def clean_data():
 def create_chart():
     found, fail, years, mass = clean_data()
 
-    mass_chart = pygal.HorizontalBar(fill=True, interpolate='cubic', style=NeonStyle)
+    fall_chart = pygal.Pie(style=NeonStyle)
+    fall_chart.add('Found', found)
+    fall_chart.add('Fail', fail)
+    fall_chart.render_to_file('../static/img/fall.svg')
+
+
+    mass_chart = pygal.HorizontalBar(style=NeonStyle)
     for i in mass.keys():
         mass_chart.add(i, mass[i])
     mass_chart.render_to_file('../static/img/mass.svg')
