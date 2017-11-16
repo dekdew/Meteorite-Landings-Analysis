@@ -1,7 +1,7 @@
 """create chart of 45716 meteorites"""
 import json
 import pygal
-from pygal.style import DarkStyle
+from pygal.style import DarkStyle, CleanStyle
 
 def call_data():
     """call data from data.json and return data"""
@@ -65,12 +65,12 @@ def create_chart():
     fall_chart.add('Fail', fail)
     fall_chart.render_to_file('../static/img/fall.svg')
 
-    years_chart = pygal.HorizontalBar(style=DarkStyle)
+    years_chart = pygal.Bar(style=DarkStyle)
     for i in sorted(years):
         years_chart.add(str(i), years[i])
     years_chart.render_to_file('../static/img/years.svg')
 
-    mass_chart = pygal.HorizontalBar(style=DarkStyle)
+    mass_chart = pygal.HorizontalBar(style=CleanStyle)
     for i in mass.keys():
         mass_chart.add(i, mass[i])
     mass_chart.render_to_file('../static/img/mass.svg')
