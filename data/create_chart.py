@@ -14,8 +14,8 @@ def clean_data():
     data = call_data() # call data
 
     found, fail = 0, 0 # count meteorite fall
-    years = {} # count meteorite in each years 0 is unknown
-    mass = {'0-10':0 , '10-100':0 , '100-1000':0 , '1000-10k':0 , '10K-100K':0 , '100K-1M':0 , '1M-10M':0 , '10M-100M':0} # count meteorite in each mass (g)
+    years = {0:0} # count meteorite in each years 0 is unknown
+    mass = {'unknown':0,'0-10':0 , '10-100':0 , '100-1000':0 , '1000-10k':0 , '10K-100K':0 , '100K-1M':0 , '1M-10M':0 , '10M-100M':0} # count meteorite in each mass (g)
 
     for i in data:
         # count meteorite fall
@@ -26,12 +26,15 @@ def clean_data():
 
         # count meteorite in each years and mass
         try:
-            year = int(i[u'year'][:4].strip('-'))
+            year = int(i['year'][:4].strip('-'))
             if year in years: # check if year is already in dict years
                 years[year] += 1 # value of this year + 1
             else: # check if year is not in dict years then create key year
                 years[year] = 1 # value of this year = 1
+        except KeyError: # check if year is no data
+            years[0] += 1
 
+        try:
             m_mass = float(i['mass'])
             if 0 <= m_mass < 10:
                 mass['0-10'] += 1
@@ -49,8 +52,8 @@ def clean_data():
                 mass['1M-10M'] += 1
             else:
                 mass['10M-100M'] += 1
-        except KeyError: # check if year is no data
-            continue
+        except:
+            mass['unknown'] += 1
 
     #print(found, fail, found+fail)
     #print(sorted(years), sum(years.values()))
@@ -67,7 +70,10 @@ def create_chart():
 
     years_chart = pygal.Bar(style=DarkStyle)
     for i in sorted(years):
-        years_chart.add(str(i), years[i])
+        if i == 0:
+            years_chart.add('unknown', years[i])
+        else:
+            years_chart.add(str(i), years[i])
     years_chart.render_to_file('../static/img/years.svg')
 
     mass_chart = pygal.HorizontalBar(style=CleanStyle)
