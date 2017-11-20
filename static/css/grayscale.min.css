@@ -128,10 +128,6 @@ html, body {
     -webkit-transition:all 0.3s linear;
   }
   
-  .about__slot.bio .name {
-    color:#f5f5f5;
-  }
-  
   .about__section .about__slot:hover .headshot {
     opacity:1;
     width:100%;
