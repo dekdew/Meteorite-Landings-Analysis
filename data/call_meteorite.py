@@ -8,6 +8,7 @@ def call_data():
 
 def call(met):
     data = call_data()
+
     m_class, mass, fall, year, geolocation = 'n/a', 'n/a', 'n/a', 'n/a', 'n/a'
 
     for i in data:

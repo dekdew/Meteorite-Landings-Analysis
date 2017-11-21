@@ -24,7 +24,7 @@ def clean_data():
         else:
             fail += 1
 
-        # count meteorite in each years and mass
+        # count meteorite in each years
         try:
             year = int(i['year'][:4].strip('-'))
             if year in years: # check if year is already in dict years
@@ -34,6 +34,7 @@ def clean_data():
         except KeyError: # check if year is no data
             years[0] += 1
 
+        # count meteorite in each mass
         try:
             m_mass = float(i['mass'])
             if 0 <= m_mass < 10:
@@ -52,7 +53,7 @@ def clean_data():
                 mass['1M-10M'] += 1
             else:
                 mass['10M-100M'] += 1
-        except:
+        except KeyError:
             mass['unknown'] += 1
 
     #print(found, fail, found+fail)
@@ -80,4 +81,5 @@ def create_chart():
     for i in mass.keys():
         mass_chart.add(i, mass[i])
     mass_chart.render_to_file('../static/img/mass.svg')
+
 create_chart()
