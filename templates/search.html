@@ -68,7 +68,7 @@
       <div class="intro-body">
         <div class="container">
           <div class="row">
-            <div class="col-lg-8 mx-auto">
+            <div class="col-lg-6 mx-auto">
               <h1 class="brand-heading">{{ search }}</h1>
               <ul>
                 <li><p class="intro-text">Class : {{ m_class }}</p></li>
@@ -77,6 +77,9 @@
                 <li><p class="intro-text">Year : {{ year }}</p></li>
                 <li><p class="intro-text">Location : {{ location }}</p></li>
               </ul>
+            </div>
+            <div class="col-lg-6 mx-auto">
+              
             </div>
           </div>
         </div>
@@ -94,19 +97,5 @@
 
   <!-- Custom scripts for this template -->
   <script src="../static/js/grayscale.min.js"></script>
-
-  <!-- Google Maps -->
-  <script
-    src="https://code.jquery.com/jquery-1.12.4.min.js"
-    integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-    crossorigin="anonymous">
-  </script>
-  <script type="text/javascript" src="{{ url_for('static', filename='heatmap.js') }}"></script>
-  <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0BqvqdLQO9o7yiqZ3aapKIlPLacqr6Ug&libraries=visualization&callback=initMap">
-  </script>
-
-  <!-- PopUp -->
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
 </html>
