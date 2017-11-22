@@ -15,7 +15,7 @@ def clean_data():
 
     found, fail = 0, 0 # count meteorite fall
     years = {0:0} # count meteorite in each years 0 is unknown
-    mass = {'unknown':0,'0-10':0 , '10-100':0 , '100-1000':0 , '1000-10k':0 , '10K-100K':0 , '100K-1M':0 , '1M-10M':0 , '10M-100M':0} # count meteorite in each mass (g)
+    mass = {'0-10':0 , '10-100':0 , '100-1000':0 , '1000-10k':0 , '10K-100K':0 , '100K-1M':0 , '1M-10M':0 , '10M-100M':0, 'unknown':0} # count meteorite in each mass (g)
 
     for i in data:
         # count meteorite fall
