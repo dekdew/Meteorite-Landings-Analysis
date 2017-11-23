@@ -63,8 +63,8 @@ def clean_data():
 
 def create_chart():
     found, fail, years, mass = clean_data()
-
     fall_chart = pygal.Pie(style=DarkStyle)
+    fall_chart.title = "Meteorite flasks"
     fall_chart.add('Found', found)
     fall_chart.add('Fail', fail)
     fall_chart.render_to_file('../static/img/fall.svg')
