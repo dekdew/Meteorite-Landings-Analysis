@@ -79,6 +79,7 @@ def create_chart():
     years_chart.render_to_file('../static/img/years.svg')
 
     mass_chart = pygal.HorizontalBar(style=CleanStyle)
+    mass_chart.title = "Mass's flasks"
     for i in mass.keys():
         mass_chart.add(i, mass[i])
     mass_chart.render_to_file('../static/img/mass.svg')
