@@ -10,8 +10,8 @@ def index():
 @app.route('/search', methods = ['GET'])
 def search():
     search = request.args.get('search', None)
-    m_class, mass, fall, year, geolocation = call_meteorite.call(search)
-    return render_template('search.html', search=search, m_class=m_class, mass=mass, fall=fall, year=year, location=geolocation)
+    m_class, mass, fall, year, geolocation, lat, lon = call_meteorite.call(search)
+    return render_template('search.html', search=search, m_class=m_class, mass=mass, fall=fall, year=year, location=geolocation, lat=lat, lon=lon)
 
 if __name__ == "__main__":
     app.run(debug=True)

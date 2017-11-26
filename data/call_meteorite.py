@@ -9,7 +9,7 @@ def call_data():
 def call(met):
     data = call_data()
 
-    m_class, mass, fall, year, geolocation = 'n/a', 'n/a', 'n/a', 'n/a', 'n/a'
+    m_class, mass, fall, year, geolocation, lat, lon = 'n/a', 'n/a', 'n/a', 'n/a', 'n/a', 0, 0
 
     for i in data:
         if met.lower() == i['name'].lower():
@@ -38,4 +38,15 @@ def call(met):
             except KeyError: # check if no data
                 location = 'n/a'
 
-    return m_class, mass, fall, year, geolocation
+            try:
+                lat = float(i['reclat'])
+            except KeyError:
+                lat = 0
+
+            try:
+                lon = float(i['reclong'])
+            except KeyError:
+                lon = 0
+
+
+    return m_class, mass, fall, year, geolocation, lat, lon
