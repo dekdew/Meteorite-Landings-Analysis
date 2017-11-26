@@ -70,6 +70,7 @@ def create_chart():
     fall_chart.render_to_file('../static/img/fall.svg')
 
     years_chart = pygal.Bar(style=DarkStyle)
+    years_chart.title = "Years found"
     for i in sorted(years):
         if i == 0:
             years_chart.add('unknown', years[i])
