@@ -1,5 +1,6 @@
 """create chart of 45716 meteorites"""
 import json
+import gmplot
 import pygal
 from pygal.style import DarkStyle, CleanStyle
 
@@ -13,11 +14,39 @@ def clean_data():
     """clean data and return somethings to create chart"""
     data = call_data() # call data
 
+    lat, lng = [], []
+    found_lat, found_long = [], []
+    fail_lat, fail_long = [], []
     found, fail = 0, 0 # count meteorite fall
     years = {0:0} # count meteorite in each years 0 is unknown
     mass = {'0-10':0 , '10-100':0 , '100-1000':0 , '1000-10k':0 , '10K-100K':0 , '100K-1M':0 , '1M-10M':0 , '10M-100M':0, 'unknown':0} # count meteorite in each mass (g)
 
     for i in data:
+        # lat long
+        try:
+            rlat = i['geolocation']['coordinates'][1]
+            rlng = i['geolocation']['coordinates'][0]
+            if (rlat not in lat) and (rlng not in lng):
+                lat.append(rlat)
+                lng.append(rlng)
+        except:
+            print('', end='')
+
+        # found fail lat long
+        try:
+            rlat = i['geolocation']['coordinates'][1]
+            rlng = i['geolocation']['coordinates'][0]
+            fall = i['fall']
+            if fall == 'Found':
+                found_lat.append(rlat)
+                found_long.append(rlng)
+            elif fall == 'Fell':
+                fail_lat.append(rlat)
+                fail_long.append(rlng)    
+        except:
+            print('', end='')
+
+
         # count meteorite fall
         if i['fall'] == 'Found':
             found += 1
@@ -59,10 +88,23 @@ def clean_data():
     #print(found, fail, found+fail)
     #print(sorted(years), sum(years.values()))
     #print(mass)
-    return found, fail, years, mass
+    return found, fail, years, mass, lat, lng, found_lat, found_long, fail_lat, fail_long
 
 def create_chart():
-    found, fail, years, mass = clean_data()
+    found, fail, years, mass, lat, lng, found_lat, found_long, fail_lat, fail_long = clean_data()
+
+    gmap = gmplot.GoogleMapPlotter(0, 0, 2)
+    gmap.scatter(lat, lng, 'red', size=50000, marker=False)
+    gmap.draw("map.html")
+
+    gmap = gmplot.GoogleMapPlotter(0, 0, 2)
+    gmap.scatter(found_lat, found_long, 'red', size=50000, marker=False)
+    gmap.draw("found_map.html")
+
+    gmap = gmplot.GoogleMapPlotter(0, 0, 2)
+    gmap.scatter(fail_lat, fail_long, 'red', size=50000, marker=False)
+    gmap.draw("fail_map.html")
+
     fall_chart = pygal.Pie(style=DarkStyle)
     fall_chart.title = "Meteorite flasks"
     fall_chart.add('Found', found)
@@ -84,4 +126,6 @@ def create_chart():
         mass_chart.add(i, mass[i])
     mass_chart.render_to_file('../static/img/mass.svg')
 
+    print(found_lat)
+    print(fail_lat)
 create_chart()
