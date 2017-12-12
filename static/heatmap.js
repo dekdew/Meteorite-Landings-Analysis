@@ -30,7 +30,7 @@ function getPoints() {
           $.ajax({ 
               'async': false, 
               'global': false, 
-              'url': 'https://data.nasa.gov/resource/y77d-th95.json', 
+              'url': 'https://data.nasa.gov/resource/y77d-th95.json',
               'dataType': "json", 
               'success': function (data) {
                    json = data; 
