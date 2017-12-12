@@ -9,6 +9,8 @@ def call_data():
 def call(met):
     data = call_data()
 
+    met = met.replace('+', ' ')
+
     m_class, mass, fall, year, geolocation, lat, lon = 'n/a', 'n/a', 'n/a', 'n/a', 'n/a', 0, 0
 
     for i in data:
