@@ -48,6 +48,9 @@
               <a class="nav-link js-scroll-trigger" href="#mass">Mass</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#class">Class</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#member">Member</a>
             </li>
             <li class="nav-item">
@@ -99,7 +102,7 @@
     </section>
 
     <!-- Year -->
-    <section id="year" class="content-section text-center" style="padding-top:1em; padding-bottom:0; height:100% auto; min-height: 100%;">
+    <section id="year" class="content-section text-center" style="padding-top:1em; padding-bottom:0; height:100% auto; min-height: 100%; background-color:#fff;">
       <div class="container">
         <div class="col-lg-9 mx-auto">
           <object data="../static/img/years.svg" type="image/svg+xml">
@@ -107,17 +110,31 @@
           </object>
         </div>
         <div class="col-lg-12 mx-auto">
-          <p>In the graph, we can assume in two cases. The technology advancement and the geological survey. In the technology case, by an advancement of technology can make scientists found many meteorites in our Earth in the past to present, using a telescope, the power of magnetism and age of meteorites from biological verification. For unknown case, is from a geological survey by biological verification or chemical verification with the meteorites in the layer and can't find out the age of it, this process is similar to fossil verification or layer verification.</p>
+          <p style="color:#000;">In the graph, we can assume in two cases. The technology advancement and the geological survey. In the technology case, by an advancement of technology can make scientists found many meteorites in our Earth in the past to present, using a telescope, the power of magnetism and age of meteorites from biological verification. For unknown case, is from a geological survey by biological verification or chemical verification with the meteorites in the layer and can't find out the age of it, this process is similar to fossil verification or layer verification.</p>
         </div>
       </div>
     </section>
 
     <!-- Mass -->
-    <section id="mass" class="content-section text-center" style="padding-top:1em; padding-bottom:0; height:100% auto; min-height: 100%; background-color:#fff;">
+    <section id="mass" class="content-section text-center" style="padding-top:1em; padding-bottom:0; height:100% auto; min-height: 100%;">
       <div class="container">
         <div class="col-lg-9 mx-auto">
           <object data="../static/img/mass.svg" type="image/svg+xml">
             <img src="../static/img/mass.svg" alt="Fall Chart">
+          </object>
+        </div>
+        <div class="col-lg-12 mx-auto">
+          <p>In the graph, the factor that effects with this graph is magnitude/radius of meteorite impact and element of the meteorite. We also knew the meteorites in our Earth is only flasks from the big one, scientists considered the mass of meteorites from their biological by analyzed type and considered the impact magnitude with the type of meteorite for calculated the real mass of it. In some case, some meteorites have no impact magnitude and almost absolute burn by friction force in the atmosphere. So, that made scientists can't consider the mass of it.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Class -->
+    <section id="class" class="content-section text-center" style="padding-top:1em; padding-bottom:0; height:100% auto; min-height: 100%; background-color:#fff;">
+      <div class="container">
+        <div class="col-lg-9 mx-auto">
+          <object data="../static/img/class.svg" type="image/svg+xml">
+            <img src="../static/img/class.svg" alt="Fall Chart">
           </object>
         </div>
         <div class="col-lg-12 mx-auto">
@@ -217,9 +234,6 @@
   <script type="text/javascript" src="{{ url_for('static', filename='heatmap.js') }}"></script>
   <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0BqvqdLQO9o7yiqZ3aapKIlPLacqr6Ug&libraries=visualization&callback=initMap">
-  </script>
-  <script async defer
-      src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=true_or_false">
   </script>
 
 </html>

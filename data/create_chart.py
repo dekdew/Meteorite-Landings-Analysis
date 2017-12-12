@@ -2,7 +2,7 @@
 import json
 import gmplot
 import pygal
-from pygal.style import DarkStyle, CleanStyle
+from pygal.style import DarkStyle, RedBlueStyle
 
 def call_data():
     """call data from data.json and return data"""
@@ -111,7 +111,7 @@ def create_chart():
     fall_chart.add('Fail', fail)
     fall_chart.render_to_file('../static/img/fall.svg')
 
-    years_chart = pygal.Bar(style=DarkStyle)
+    years_chart = pygal.Bar(style=RedBlueStyle)
     years_chart.title = "Years found"
     for i in sorted(years):
         if i == 0:
@@ -120,7 +120,7 @@ def create_chart():
             years_chart.add(str(i), years[i])
     years_chart.render_to_file('../static/img/years.svg')
 
-    mass_chart = pygal.HorizontalBar(style=CleanStyle)
+    mass_chart = pygal.HorizontalBar(style=DarkStyle)
     mass_chart.title = "Mass's flasks"
     for i in mass.keys():
         mass_chart.add(i, mass[i])
