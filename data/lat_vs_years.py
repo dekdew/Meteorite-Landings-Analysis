@@ -74,7 +74,7 @@ unknown = len(v_class_2[v_class_2.recclass == 'Unknown-Ungrouped'])
 
 
 class_chart = pygal.Pie(half_pie=True, style=RedBlueStyle)
-class_chart.title = 'Meteorites classified by material in %'
+class_chart.title = 'Meteorites classified by material'
 class_chart.add('Stony meteorites', stony)
 class_chart.add('Iron meteorites', iron)
 class_chart.add('Stony–iron meteorites', istony)
