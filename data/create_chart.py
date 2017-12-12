@@ -37,12 +37,12 @@ def clean_data():
             rlat = i['geolocation']['coordinates'][1]
             rlng = i['geolocation']['coordinates'][0]
             fall = i['fall']
-            if fall == 'Found':
+            if (rlat not in found_lat) and (rlng not in found_long) and (fall == 'Found'):
                 found_lat.append(rlat)
                 found_long.append(rlng)
-            elif fall == 'Fell':
+            elif (rlat not in fail_lat) and (rlng not in fail_long) and (fall == 'Fell'):
                 fail_lat.append(rlat)
-                fail_long.append(rlng)    
+                fail_long.append(rlng)
         except:
             print('', end='')
 
