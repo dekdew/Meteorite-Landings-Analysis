@@ -106,13 +106,13 @@ def create_chart():
     gmap.draw("../templates/fail_map.html")
 
     fall_chart = pygal.Pie(style=DarkStyle)
-    fall_chart.title = "Meteorite flasks"
+    fall_chart.title = "Meteorite found and fail"
     fall_chart.add('Found', found)
     fall_chart.add('Fail', fail)
     fall_chart.render_to_file('../static/img/fall.svg')
 
     years_chart = pygal.Bar(style=RedBlueStyle)
-    years_chart.title = "Years found"
+    years_chart.title = "Meteorites classified by years"
     for i in sorted(years):
         if i == 0:
             years_chart.add('unknown', years[i])
@@ -121,7 +121,7 @@ def create_chart():
     years_chart.render_to_file('../static/img/years.svg')
 
     mass_chart = pygal.HorizontalBar(style=DarkStyle)
-    mass_chart.title = "Mass's flasks"
+    mass_chart.title = "Meteorites classified by mass"
     for i in mass.keys():
         mass_chart.add(i, mass[i])
     mass_chart.render_to_file('../static/img/mass.svg')
