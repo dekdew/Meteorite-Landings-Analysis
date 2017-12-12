@@ -98,11 +98,11 @@ def create_chart():
     gmap.draw("map.html")
 
     gmap = gmplot.GoogleMapPlotter(0, 0, 2)
-    gmap.scatter(found_lat, found_long, 'red', size=50000, marker=False)
+    gmap.scatter(found_lat, found_long, '#00134d', size=50000, marker=False)
     gmap.draw("found_map.html")
 
     gmap = gmplot.GoogleMapPlotter(0, 0, 2)
-    gmap.scatter(fail_lat, fail_long, 'red', size=50000, marker=False)
+    gmap.scatter(fail_lat, fail_long, '#4d0000', size=50000, marker=False)
     gmap.draw("fail_map.html")
 
     fall_chart = pygal.Pie(style=DarkStyle)
