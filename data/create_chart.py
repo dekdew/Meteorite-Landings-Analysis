@@ -37,12 +37,12 @@ def clean_data():
             rlat = i['geolocation']['coordinates'][1]
             rlng = i['geolocation']['coordinates'][0]
             fall = i['fall']
-            if fall == 'Found':
+            if (rlat not in found_lat) and (rlng not in found_long) and (fall == 'Found'):
                 found_lat.append(rlat)
                 found_long.append(rlng)
-            elif fall == 'Fell':
+            elif (rlat not in fail_lat) and (rlng not in fail_long) and (fall == 'Fell'):
                 fail_lat.append(rlat)
-                fail_long.append(rlng)    
+                fail_long.append(rlng)
         except:
             print('', end='')
 
@@ -95,15 +95,15 @@ def create_chart():
 
     gmap = gmplot.GoogleMapPlotter(0, 0, 2)
     gmap.scatter(lat, lng, 'red', size=50000, marker=False)
-    gmap.draw("map.html")
+    gmap.draw("../templates/map.html")
 
     gmap = gmplot.GoogleMapPlotter(0, 0, 2)
-    gmap.scatter(found_lat, found_long, 'red', size=50000, marker=False)
-    gmap.draw("found_map.html")
+    gmap.scatter(found_lat, found_long, '#00134d', size=50000, marker=False)
+    gmap.draw("../templates/found_map.html")
 
     gmap = gmplot.GoogleMapPlotter(0, 0, 2)
-    gmap.scatter(fail_lat, fail_long, 'red', size=50000, marker=False)
-    gmap.draw("fail_map.html")
+    gmap.scatter(fail_lat, fail_long, '#4d0000', size=50000, marker=False)
+    gmap.draw("../templates/fail_map.html")
 
     fall_chart = pygal.Pie(style=DarkStyle)
     fall_chart.title = "Meteorite flasks"
@@ -126,6 +126,4 @@ def create_chart():
         mass_chart.add(i, mass[i])
     mass_chart.render_to_file('../static/img/mass.svg')
 
-    print(found_lat)
-    print(fail_lat)
 create_chart()
