@@ -3,14 +3,17 @@ import matplotlib.pyplot as plt
 import pygal
 from pygal.style import RedBlueStyle
 
+# call data from data.csv file
 data = pd.read_csv('data.csv')
 data = data[(data.reclat != 0) & (data.reclong != 0)]
 data.info()
 
+# clean data
 valt = data.groupby('nametype').get_group('Valid').copy()
 valt.dropna(inplace=True)
 valt.info()
 
+# meteorites classified by lat and years chart
 plt.scatter(valt.year,valt.reclat,color='g',alpha=0.4)
 plt.xlim(1900,2013)
 plt.ylim(-90,90)
@@ -19,10 +22,13 @@ plt.xlabel('Year')
 plt.title('Meteorite recorded latitude vs year')
 plt.show()
 
+# clean data
 v_class = valt['recclass'].value_counts()
 
+# copy data for detect
 v_class_2 = valt.copy()
 
+# gather meteorite's sub-type to main type
 v_class_2.recclass.replace(to_replace=['Acapulcoite', 'Acapulcoite/Lodranite', 'Acapulcoite/lodranite',
 'Lodranite', 'Lodranite-an', 'Winonaite', 'Achondrite-prim', 'Angrite', 'Aubrite', 'Aubrite-an', 'Ureilite', 'Ureilite-an', 'Ureilite-pmict',
 'Brachinite', 'Diogenite', 'Diogenite-an', 'Diogenite-olivine', 'Diogenite-pm', 'Eucrite', 'Eucrite-Mg rich', 'Eucrite-an', 'Eucrite-br',
@@ -54,25 +60,29 @@ v_class_2.recclass.replace(to_replace=['Acapulcoite', 'Acapulcoite/Lodranite', '
 'E5','E6', 'K', 'K3','R', 'R3', 'R3-4', 'R3-5', 'R3-6', 'R3.4', 'R3.5-6', 'R3.6', 'R3.7', 'R3.8', 'R3.8-5', 'R3.8-6', 'R3.9', 'R3/4', 'R4',
 'R4/5', 'R5', 'R6'],value='Stony meteorites',inplace=True)
 
+# gather meteorite's sub-type to main type
 v_class_2.recclass.replace(to_replace=['Pallasite', 'Pallasite, PES','Pallasite, PMG',
 'Pallasite, PMG-an', 'Pallasite, ungrouped', 'Pallasite?', 'Mesosiderite', 'Mesosiderite-A','Mesosiderite-A1',
 'Mesosiderite-A2', 'Mesosiderite-A3','Mesosiderite-A3/4', 'Mesosiderite-A4', 'Mesosiderite-B','Mesosiderite-B1',
 'Mesosiderite-B2', 'Mesosiderite-B4','Mesosiderite-C', 'Mesosiderite-C2', 'Mesosiderite-an','Mesosiderite?'],value='Stony–iron meteorites',inplace=True)
 
+# gather meteorite's sub-type to main type
 v_class_2.recclass.replace(to_replace=['Iron, IC', 'Iron, IC-an', 'Iron, IIAB', 'Iron, IIAB-an',
 'Iron, IIC', 'Iron, IID', 'Iron, IID-an','Iron, IIF', 'Iron, IIG', 'Iron, IIIAB', 'Iron, IIIAB-an', 'Iron, IIIAB?', 'Iron, IIIE',
 'Iron, IIIE-an', 'Iron, IIIF', 'Iron, IVA', 'Iron, IVA-an', 'Iron, IVB', 'Iron, IAB complex', 'Iron, IAB-MG','Iron, IAB-an', 'Iron, IAB-sHH',
 'Iron, IAB-sHL', 'Iron, IAB-sLH','Iron, IAB-sLL', 'Iron, IAB-sLM', 'Iron, IAB-ung', 'Iron, IAB?','Iron, IIE', 'Iron, IIE-an', 'Iron, IIE?', 'Iron','Iron?','Relict iron', 'Iron, ungrouped'],value='Iron meteorites',inplace=True)
 
+# gather meteorite's sub-type to main type
 v_class_2.recclass.replace(to_replace=['Chondrite-fusion crust', 'Fusion crust','Impact melt breccia', 'Enst achon-ung','Stone-uncl', 'Stone-ung',
 'Unknown', 'Achondrite-ung', 'Chondrite-ung', 'Enst achon', 'E-an', 'E3-an', 'E5-an'],value='Unknown-Ungrouped',inplace=True)
 
+# count meteorites in each type
 stony = len(v_class_2[v_class_2.recclass == 'Stony meteorites'])
 istony = len(v_class_2[v_class_2.recclass == 'Stony–iron meteorites'])
 iron = len(v_class_2[v_class_2.recclass == 'Iron meteorites'])
 unknown = len(v_class_2[v_class_2.recclass == 'Unknown-Ungrouped'])
 
-
+# create meteorites classified by material chart
 class_chart = pygal.Pie(half_pie=True, style=RedBlueStyle)
 class_chart.title = 'Meteorites classified by material'
 class_chart.add('Stony meteorites', stony)

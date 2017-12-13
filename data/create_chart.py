@@ -14,15 +14,15 @@ def clean_data():
     """clean data and return somethings to create chart"""
     data = call_data() # call data
 
-    lat, lng = [], []
-    found_lat, found_long = [], []
-    fail_lat, fail_long = [], []
+    lat, lng = [], [] # Latitude and Longitude
+    found_lat, found_long = [], [] # meteorite found's Latitude and Longitude
+    fail_lat, fail_long = [], [] # meteorite fail's Latitude and Longitude
     found, fail = 0, 0 # count meteorite fall
     years = {0:0} # count meteorite in each years 0 is unknown
     mass = {'0-10':0 , '10-100':0 , '100-1000':0 , '1000-10k':0 , '10K-100K':0 , '100K-1M':0 , '1M-10M':0 , '10M-100M':0, 'unknown':0} # count meteorite in each mass (g)
 
     for i in data:
-        # lat long
+        # Latitude and Longitude
         try:
             rlat = i['geolocation']['coordinates'][1]
             rlng = i['geolocation']['coordinates'][0]
@@ -32,7 +32,7 @@ def clean_data():
         except:
             print('', end='')
 
-        # found fail lat long
+        # found and fail Latitude and Longitude
         try:
             rlat = i['geolocation']['coordinates'][1]
             rlng = i['geolocation']['coordinates'][0]
@@ -85,32 +85,35 @@ def clean_data():
         except KeyError:
             mass['unknown'] += 1
 
-    #print(found, fail, found+fail)
-    #print(sorted(years), sum(years.values()))
-    #print(mass)
     return found, fail, years, mass, lat, lng, found_lat, found_long, fail_lat, fail_long
 
 def create_chart():
+    # get data from clean_data function
     found, fail, years, mass, lat, lng, found_lat, found_long, fail_lat, fail_long = clean_data()
 
+    # all meteorites maps
     gmap = gmplot.GoogleMapPlotter(0, 0, 2)
     gmap.scatter(lat, lng, 'red', size=50000, marker=False)
     gmap.draw("../templates/map.html")
 
+    # found meteorites maps
     gmap = gmplot.GoogleMapPlotter(0, 0, 2)
     gmap.scatter(found_lat, found_long, '#00134d', size=50000, marker=False)
     gmap.draw("../templates/found_map.html")
 
+    # fail meteorites maps
     gmap = gmplot.GoogleMapPlotter(0, 0, 2)
     gmap.scatter(fail_lat, fail_long, '#4d0000', size=50000, marker=False)
     gmap.draw("../templates/fail_map.html")
 
+    # create meteorite found and fail chart
     fall_chart = pygal.Pie(style=DarkStyle)
     fall_chart.title = "Meteorite found and fail"
     fall_chart.add('Found', found)
     fall_chart.add('Fail', fail)
     fall_chart.render_to_file('../static/img/fall.svg')
 
+    # create meteorites classified by years chart
     years_chart = pygal.Bar(style=RedBlueStyle)
     years_chart.title = "Meteorites classified by years"
     for i in sorted(years):
@@ -120,6 +123,7 @@ def create_chart():
             years_chart.add(str(i), years[i])
     years_chart.render_to_file('../static/img/years.svg')
 
+    # create meteorites classified by mass chart
     mass_chart = pygal.HorizontalBar(style=DarkStyle)
     mass_chart.title = "Meteorites classified by mass"
     for i in mass.keys():
